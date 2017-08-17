@@ -1,0 +1,28 @@
+{
+  "name": "soft-angular-mask",
+  "version": "0.1.5",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/renatosistemasvc/soft-angular-mask"
+  },
+  "author": {
+    "name": "Renato Souza de Oliveira",
+    "email": "renatosistemas.vc@gmail.com"
+  },
+  "keywords": [
+    "angular"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/renatosistemasvc/soft-angular-mask/issues"
+  },
+  "main": "soft-angular-mask.umd.js",
+  "module": "soft-angular-mask.js",
+  "jsnext:main": "soft-angular-mask.js",
+  "typings": "soft-angular-mask.d.ts",
+  "peerDependencies": {
+    "@angular/core": "^4.0.0",
+    "rxjs": "^5.1.0",
+    "zone.js": "^0.8.4"
+  }
+}
