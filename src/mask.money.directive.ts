@@ -30,7 +30,8 @@ export class MaskMoneyDirective implements ControlValueAccessor {
             
     }else{
   
-      value = (value.toString().indexOf(".") >= 0) ? (value.length == 3) ? value+'0' : value : value+'00';
+      value = value.toString();
+      value = (value.indexOf(".") >= 0) ? (value.length == 3) ? value+'0' : value : value+'00';
       this.input(value);
   
     }
