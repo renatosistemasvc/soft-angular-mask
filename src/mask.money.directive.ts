@@ -11,6 +11,8 @@ export const MONEY: Provider = {
   selector: '[mask-money]',
   host: {
     '(input)': 'input($event.target.value, $event.target)',
+    '(blur)': 'onTouched($event)',
+    
   },
   providers: [MONEY]
 })
@@ -29,13 +31,12 @@ export class MaskMoneyDirective implements ControlValueAccessor {
       this.renderer.setElementProperty(this.element.nativeElement, 'value', '');
             
     }else{
-  
+
       value = value.toString();
       value = (value.indexOf(".") >= 0) ? (value.length == 3) ? value+'0' : value : value+'00';
       this.input(value);
   
     }
-
   }
 
   propagateChange = (_: any) => {};
@@ -44,7 +45,11 @@ export class MaskMoneyDirective implements ControlValueAccessor {
     this.propagateChange = fn;
   }
 
-  registerOnTouched() {}
+  public onTouched: any = () => { }
+
+  registerOnTouched(fn: any) {
+    this.onTouched = fn;
+  }
 
   input(val, event?){
 
@@ -103,8 +108,11 @@ export class MaskMoneyDirective implements ControlValueAccessor {
          event.setSelectionRange(mascared.length, mascared.length);
     
     }, 0);
-       
+   
+    
 }
+
+
 
   
 }

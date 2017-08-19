@@ -44,10 +44,15 @@ export class MaskNumberDirective {
     this.propagateChange = fn;
   }
 
-  registerOnTouched() {}
+  public onTouched: any = () => { }
+
+  registerOnTouched(fn: any) {
+    this.onTouched = fn;
+  }
 
   input(val, event?){
       
+    
       let mascared:string = '';
       let unmask = val.toString().replace(new RegExp(/[^\d]/, 'g'), '');
       
@@ -77,10 +82,13 @@ export class MaskNumberDirective {
           event.setSelectionRange(mascared.length, mascared.length);
       
       }, 0);
-
+     
+    
   }
 
   focusout(){
+
+    this.onTouched();
 
     let valCurrentField: string = (this.element.nativeElement.value == undefined) ? '' : this.element.nativeElement.value;
       
