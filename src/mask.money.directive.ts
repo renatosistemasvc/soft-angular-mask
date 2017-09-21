@@ -60,7 +60,7 @@ export class MaskMoneyDirective implements ControlValueAccessor {
       return true;
     }
 
-    let unmask = val.toFixed(2).toString().replace(new RegExp(/[^\d]/, 'g'), '').replace(/^0+/, '');
+    let unmask = (val*1).toFixed(2).toString().replace(new RegExp(/[^\d]/, 'g'), '').replace(/^0+/, '');
     
     if(unmask.length == 0)
     {
