@@ -32,8 +32,25 @@ export class MaskMoneyDirective implements ControlValueAccessor {
             
     }else{
 
-      value = value.toString();
-      value = (value.indexOf(".") >= 0) ? (value.length == 3) ? value+'0' : value : value+'00';
+      value = value.toString().split(".");
+          
+      if(typeof value[1] == 'undefined'){
+
+        value = value[0]+'.00';
+        
+      }else if(value[1].length == 1){
+        
+        value = value[0]+'.'+value[1]+'0';
+          
+      }else if (value[1].length == 2){
+
+        value = value[0]+'.'+value[1]; 
+      
+      }else if (value[1].length > 2){
+
+        value = value[0]+'.'+value[1].slice(0, 2); 
+      }
+
       this.input(value);
   
     }
@@ -53,14 +70,14 @@ export class MaskMoneyDirective implements ControlValueAccessor {
 
   input(val, event?){
 
-    if(val.toString() === '0')
+    if(val === '0')
     {
       this.propagateChange('0');
       this.renderer.setElementProperty(this.element.nativeElement, 'value', this.prefix+' 0,00');
       return true;
     }
 
-    let unmask = (val*1).toFixed(2).toString().replace(new RegExp(/[^\d]/, 'g'), '').replace(/^0+/, '');
+    let unmask = val.toString().replace(new RegExp(/[^\d]/, 'g'), '').replace(/^0+/, '');
     
     if(unmask.length == 0)
     {
@@ -110,7 +127,7 @@ export class MaskMoneyDirective implements ControlValueAccessor {
     }, 0);
    
     
-}
+  }
 
 
 
