@@ -20,6 +20,7 @@ export class MaskNumberDirective {
     
   @Input('mask') mascara: string;
   @Input('reqMin') qtdRequiredMin: number;
+  @Input('maskkOutput') maskkOutput: boolean = false;
 
   constructor(@Inject(Renderer) private renderer: Renderer, @Inject(ElementRef) private element: ElementRef) { }
 
@@ -72,7 +73,7 @@ export class MaskNumberDirective {
           }
       }
 
-      this.propagateChange(mascared);
+      this.propagateChange((this.maskkOutput) ? mascared : mascared.replace(new RegExp(/[^\d]/, 'g'), ''));
       this.renderer.setElementProperty(this.element.nativeElement, 'value', mascared)
       
 
