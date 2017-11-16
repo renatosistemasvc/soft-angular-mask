@@ -57,6 +57,7 @@ Use in your Angular application:
 ```xml
 [mask]="'9'"  <!-- '9' - represents a number -->
 [reqMin]="1"  <!-- minimum size to mask -->
+[maskkOutput]="true"  <!-- output ngModel masked -->
 ```
 
 ## Options - mask-money
@@ -64,6 +65,11 @@ Use in your Angular application:
 ```xml
 [prefix]="'R$'"  <!-- printed before value -->
 ```
+
+## Solicitation of improvements
+
+SouUmLucas (10/11/2017) - enable output of ngModel masked / status: implemented
+
 
 ## License
 
