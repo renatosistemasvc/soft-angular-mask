@@ -20,8 +20,13 @@ export const MONEY: Provider = {
 export class MaskMoneyDirective implements ControlValueAccessor {
 
   @Input('prefix') prefix: string;
+  @Input('thousandsSeparator') thousandsSeparator: string;
+  @Input('decimalSeparator') decimalSeparator: string;
 
-  constructor(@Inject(Renderer) private renderer: Renderer, @Inject(ElementRef) private element: ElementRef) { }
+  constructor(@Inject(Renderer) private renderer: Renderer, @Inject(ElementRef) private element: ElementRef) {
+    this.thousandsSeparator = ','
+    this.decimalSeparator = '.'
+  }
 
   writeValue(value: any) {
     
@@ -32,23 +37,23 @@ export class MaskMoneyDirective implements ControlValueAccessor {
             
     }else{
 
-      value = value.toString().split(".");
+      value = value.toString().split(this.decimalSeparator);
           
       if(typeof value[1] == 'undefined'){
 
-        value = value[0]+'.00';
+        value = value[0] + this.decimalSeparator + '00';
         
       }else if(value[1].length == 1){
         
-        value = value[0]+'.'+value[1]+'0';
+        value = value[0] + this.decimalSeparator + value[1]+'0';
           
       }else if (value[1].length == 2){
 
-        value = value[0]+'.'+value[1]; 
+        value = value[0] + this.decimalSeparator + value[1]; 
       
       }else if (value[1].length > 2){
 
-        value = value[0]+'.'+value[1].slice(0, 2); 
+        value = value[0] + this.decimalSeparator + value[1].slice(0, 2); 
       }
 
       this.input(value);
@@ -73,7 +78,7 @@ export class MaskMoneyDirective implements ControlValueAccessor {
     if(val === '0')
     {
       this.propagateChange('0');
-      this.renderer.setElementProperty(this.element.nativeElement, 'value', this.prefix+' 0,00');
+      this.renderer.setElementProperty(this.element.nativeElement, 'value', this.prefix +' 0'+ this.decimalSeparator + '00');
       return true;
     }
 
@@ -103,7 +108,7 @@ export class MaskMoneyDirective implements ControlValueAccessor {
         if(cont == 2 && i > 1)
         {
         
-          ref = '.'+mil.slice(i-1, i) + ref;
+          ref = this.thousandsSeparator + mil.slice(i-1, i) + ref;
           cont = 0; 
         
         }else{ 
@@ -113,9 +118,9 @@ export class MaskMoneyDirective implements ControlValueAccessor {
         }
     }
 
-    let mascared = this.prefix+' '+ref +','+ dec;
+    let mascared = this.prefix+' '+ref + this.decimalSeparator + dec;
 
-    this.propagateChange(mil +'.'+ dec);
+    this.propagateChange(mil + '.' + dec);
     this.renderer.setElementProperty(this.element.nativeElement, 'value', mascared);
     
   
